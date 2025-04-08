@@ -17,7 +17,7 @@ export default function App() {
           <Link className="btn btn-outline-primary me-2" to="/qPCR">RNA提取实验流程</Link>
           <Link className="btn btn-outline-success me-2" to="/qPCRExtraction">qPCR实验流程</Link>
           <Link className="btn btn-outline-warning me-2" to="/wb">蛋白提取实验流程</Link>
-          <Link className="btn btn-outline-warning me-2" to="/wb">WB第一天流程</Link>
+          <Link className="btn btn-outline-info me-2" to="/WBday1">WB第一天流程</Link>
         </nav>
         <Routes>
           <Route path="/qPCRExtractionCell" element={<QPCRExtractionCellPage />} />
