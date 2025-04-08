@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: 🚀 Auto Deploy to GitHub Pages
 
 on:
   push:
@@ -9,14 +9,14 @@ permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout repository
+      - name: 📥 Checkout main branch
         uses: actions/checkout@v3
 
-      - name: 📦 Set up Node.js
+      - name: 📦 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -24,11 +24,12 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🛠 Build the project
+      - name: 🛠 Build Vite project
         run: npm run build
 
-      - name: 🚀 Deploy to GitHub Pages
+      - name: 🚀 Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
           publish_dir: ./dist
