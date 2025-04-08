@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import htmlDocx from "html-docx-js";
+import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
 
 export default function ExperimentFlow({ title = "实验流程", steps = [], onTemplateUpdate }) {
@@ -40,26 +40,32 @@ export default function ExperimentFlow({ title = "实验流程", steps = [], onT
   };
 
   const handleExport = () => {
-    const paragraphs = stepStates.map((step, index) => {
-      return `
-        <p><strong>步骤 ${step.step}：${step.name}</strong></p>
-        <p>预计时间：${step.time} 分钟</p>
-        <p>状态：${step.status}</p>
-        <p>说明：${step.description}</p>
-        ${step.modificationNote ? `<p>修改说明：${step.modificationNote}</p>` : ""}
-        <hr />
-      `;
+    const paragraphs = [
+      new Paragraph({
+        children: [new TextRun({ text: `实验记录：${title}`, bold: true, size: 28 })],
+      }),
+    ];
+
+    stepStates.forEach((step) => {
+      paragraphs.push(
+        new Paragraph({ children: [new TextRun({ text: `\n步骤 ${step.step}：${step.name}`, bold: true })] })
+      );
+      paragraphs.push(new Paragraph(`预计时间：${step.time} 分钟`));
+      paragraphs.push(new Paragraph(`状态：${step.status}`));
+      paragraphs.push(new Paragraph(`说明：${step.description}`));
+      if (step.modificationNote) {
+        paragraphs.push(new Paragraph(`修改说明：${step.modificationNote}`));
+      }
+      paragraphs.push(new Paragraph("------------------------------"));
     });
 
-    const htmlContent = `
-      <html><head><meta charset="utf-8"></head><body>
-      <h2>实验记录：${title}</h2>
-      ${paragraphs.join("\n")}
-      </body></html>
-    `;
+    const doc = new Document({
+      sections: [{ properties: {}, children: paragraphs }],
+    });
 
-    const blob = htmlDocx.asBlob(htmlContent);
-    saveAs(blob, `${title}.docx`);
+    Packer.toBlob(doc).then((blob) => {
+      saveAs(blob, `${title}.docx`);
+    });
   };
 
   const handleTemplateUpdate = () => {
