@@ -4,6 +4,7 @@ import QPCRPage from "./pages/QPCRPage";
 import QPCRExtractionPage from "./pages/qPCRExtractionPage";
 import Layout from "./components/Layout";
 import WBPage from "./pages/WBPage"
+import WBday1Page from "./pages/WBday1Page"
 //在这里import新的页面
 //例子：import 文件名 from "./pages/文件名";
 
