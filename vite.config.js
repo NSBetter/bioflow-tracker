@@ -31,3 +31,6 @@ export default defineConfig({
     })
   ]
 });
+optimizeDeps: {
+  include: ['html-docx-js', 'file-saver']
+}

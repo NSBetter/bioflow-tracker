@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import htmlDocx from "html-docx-js/dist/html-docx";
+import htmlDocx from "html-docx-js";
 import { saveAs } from "file-saver";
 
 export default function ExperimentFlow({ title = "实验流程", steps = [], onTemplateUpdate }) {
