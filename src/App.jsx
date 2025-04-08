@@ -5,6 +5,7 @@ import QPCRExtractionPage from "./pages/qPCRExtractionPage";
 import Layout from "./components/Layout";
 import WBPage from "./pages/WBPage"
 import WBday1Page from "./pages/WBday1Page"
+import WBday2Page from "./pages/WBday2Page"
 //在这里import新的页面
 //例子：import 文件名 from "./pages/文件名";
 
@@ -18,6 +19,7 @@ export default function App() {
           <Link className="btn btn-outline-success me-2" to="/qPCRExtraction">qPCR实验流程</Link>
           <Link className="btn btn-outline-warning me-2" to="/wb">蛋白提取实验流程</Link>
           <Link className="btn btn-outline-info me-2" to="/WBday1">WB第一天流程</Link>
+          <Link className="btn btn-outline-info me-2" to="/WBday2">WB第二天流程</Link>
         </nav>
         <Routes>
           <Route path="/qPCRExtractionCell" element={<QPCRExtractionCellPage />} />
@@ -25,6 +27,7 @@ export default function App() {
           <Route path="/qPCRExtraction" element={<QPCRExtractionPage />} />
           <Route path="/wb" element={<WBPage />} /> 
           <Route path="/WBday1" element={<WBday1Page />} />
+          <Route path="/WBday2" element={<WBday2Page />} />
         </Routes>
       </Layout>
     </Router>
