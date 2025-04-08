@@ -40,15 +40,30 @@ export default function ExperimentFlow({ title = "实验流程", steps = [], onT
   };
 
   const handleExport = () => {
+    const now = new Date();
+    const dateString = `${now.getFullYear()}年${(now.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}月${now.getDate().toString().padStart(2, "0")}日 ${now
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+
     const paragraphs = [
       new Paragraph({
-        children: [new TextRun({ text: `实验记录：${title}`, bold: true, size: 28 })],
+        children: [
+          new TextRun({
+            text: `实验记录：《${title}》 （导出时间：${dateString}）`,
+            bold: true,
+            size: 32,
+          }),
+        ],
       }),
+      new Paragraph({})
     ];
 
     stepStates.forEach((step) => {
       paragraphs.push(
-        new Paragraph({ children: [new TextRun({ text: `\n步骤 ${step.step}：${step.name}`, bold: true })] })
+        new Paragraph({ children: [new TextRun({ text: `步骤 ${step.step}：${step.name}`, bold: true })] })
       );
       paragraphs.push(new Paragraph(`预计时间：${step.time} 分钟`));
       paragraphs.push(new Paragraph(`状态：${step.status}`));
@@ -64,7 +79,8 @@ export default function ExperimentFlow({ title = "实验流程", steps = [], onT
     });
 
     Packer.toBlob(doc).then((blob) => {
-      saveAs(blob, `${title}.docx`);
+      const safeDate = dateString.replace(/[年月日 :]/g, "-");
+      saveAs(blob, `${title}_${safeDate}.docx`);
     });
   };
 
